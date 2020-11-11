@@ -1,0 +1,7 @@
+/*
+Functional component to be rendered within the Question Component.
+  Need to display answer helpfulness count and button to increase it.
+  Abilitiy to report it
+  Ability to display pictures
+
+*/

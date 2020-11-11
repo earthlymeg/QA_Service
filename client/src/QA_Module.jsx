@@ -1,5 +1,7 @@
 import React from 'react';
 
+//Master class component for organization of all sub components
+
 class QA_Module extends React.Component {
   constructor() {
     super();
