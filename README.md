@@ -5,10 +5,10 @@ Questions and Answers Module
 
 ## Related Projects
 
-  - https://github.com/Acme-Coding-Co/Q-A_Module
+  - https://github.com/Acme-Coding-Co/overview_service
+  - https://github.com/Acme-Coding-Co/QA_Service
   - https://github.com/Acme-Coding-Co/reviews-services
   - https://github.com/Acme-Coding-Co/related-items-service
-  - https://github.com/Acme-Coding-Co
 
 ## Table of Contents
 
