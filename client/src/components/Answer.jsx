@@ -8,13 +8,14 @@ Functional component to be rendered within the Question Component.
 import React from 'react';
 import Helpful from './Helpful.jsx';
 import AnswerPhoto from './AnswerPhoto.jsx';
+import moment from 'moment';
 
 const Answer = (props) => {
-  // console.log('props in Answer: ', props)
+  console.log('props in Answer: ', props)
   return (
     <div>
       <p><span>A:</span> {props.answer.body}</p>
-      <Helpful helpfulness={props.answer.helpfulness} />
+      <Helpful helpfulness={props.answer.helpfulness}/>
       <div>
         {props.answer.photos.map((photo) => {
           return (
@@ -25,8 +26,7 @@ const Answer = (props) => {
         })}
       </div>
 
-
-      <p>by {props.answer.answerer_name}</p>
+      <p>by {props.answer.answerer_name}, {moment(props.answer.date ).format("MMM Do YYYY")} | <Helpful helpfulness={props.answer.helpfulness}/> | <a href='#'>Report</a></p>
       {/* conditionally render the click button, only display if more answers are available */}
       <button>Load More Answers</button>
     </div>
