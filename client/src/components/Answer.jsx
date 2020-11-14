@@ -10,7 +10,7 @@ import Helpful from './Helpful.jsx';
 import AnswerPhoto from './AnswerPhoto.jsx';
 
 const Answer = (props) => {
-  console.log('props in Answer: ', props)
+  // console.log('props in Answer: ', props)
   return (
     <div>
       <p><span>A:</span> {props.answer.body}</p>
