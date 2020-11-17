@@ -1,5 +1,6 @@
 import React from 'react';
 import Question from './Question.jsx'
+import { Container, Col } from 'react-bootstrap';
 
 /*
 Functional component to house Question Components
@@ -12,21 +13,27 @@ Functional component to house Question Components
 
   */
 
-  const QA_List = (props) => {
-    //Props will be the array of questions from QA_Module state (allowing us to filter at the top level)
-    return (
-      <div>
-        <ul>
-          {props.questions.map((question) => {
-            return (
-              <li key={question.question_id}> <Question question={ question } /></li>
-            )
-          })}
-        </ul>
-      </div>
-    )
+const QA_List = (props) => {
+  //Props will be the array of questions from QA_Module state (allowing us to filter at the top level)
+  return (
+    <>
+      <Container>
+        <Col>
+          <>
+            {props.questions.map((question) => {
+              return (
+                <div key={question.question_id}>
+                  <Question question={question} />
+                </div>
+              )
+            })}
+          </>
+        </Col>
+      </Container>
+    </>
+  )
 
 
-  };
+};
 
-  export default QA_List;
+export default QA_List;
