@@ -1,19 +1,88 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
+import { Button, Modal, Form } from 'react-bootstrap';
 
-const AddAnswer = () => {
+const AddAnswer = (props) => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const { register, handleSubmit } = useForm();
-  const onSubmit = data => console.log(data);
+
+  const onSubmit = (data) => {
+    if (data) {
+      console.log(data);
+      handleClose();
+    }
+  };
+
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <>
+      <Button variant="link" onClick={handleShow}>
+        Add An Answer
+      </Button>
 
-      <input name='name' defaultValue='Name' ref={register({ required: true })} />
-      <input name='body' defaultValue='Ask a Question' ref={register({ required: true })} />
-      <input name='email' defaultValue='Email' ref={register({ required: false })} />
-      <input name='photos' defaultValue='photo url' ref={ register } />
-      <input type="submit" />
-    </form>
+      <Modal show={show} onHide={handleClose}>
+
+        <Modal.Header closeButton>
+          <Modal.Title> Add Your Answer! </Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+
+            <Form.Group controlId="formName">
+              <Form.Label>Name</Form.Label>
+
+              <Form.Control
+                required
+                type='text'
+                name='name'
+                placeholder='Name'
+                ref={register}
+              />
+
+            </Form.Group>
+
+            <Form.Group controlId="formBody">
+              <Form.Label>Answer</Form.Label>
+
+              <Form.Control
+                required
+                type='text'
+                name='body'
+                placeholder='Add your answer'
+                ref={register}
+              />
+
+            </Form.Group>
+
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email</Form.Label>
+
+              <Form.Control
+                required
+                type='email'
+                name='email'
+                placeholder='Email'
+                ref={register}
+              />
+
+              <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+              </Form.Text>
+
+            </Form.Group>
+
+            <Form.Control type="submit" />
+
+          </Form>
+        </Modal.Body>
+
+      </Modal>
+    </>
   )
 };
 

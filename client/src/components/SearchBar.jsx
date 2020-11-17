@@ -15,18 +15,39 @@ Class component:
 
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap'
 
-const SearchBar = () => {
+const SearchBar = (props) => {
   const { register, handleSubmit } = useForm();
-  const onSubmit = data => console.log(data);
+  const onSubmit = filter => { props.handleFilterQuestions(filter.filter) }
+
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <Container>
 
-      <input name='filter' defaultValue='Have a question? Search for answers...' ref={ register }/>
+        <Form onSubmit={handleSubmit(onSubmit)}>
 
-      <input type="submit" />
-    </form>
+          <InputGroup className='mb-3'>
+
+            <Form.Control
+              type='text'
+              name='filter'
+              className='form-control'
+              placeholder='Have a question? Search for answers'
+              ref={register}
+            />
+
+            <InputGroup.Append>
+              <Button variant='outline-primary' onClick={handleSubmit(onSubmit)}>Search!</Button>
+            </InputGroup.Append>
+
+          </InputGroup>
+
+        </Form>
+
+
+    </Container>
+
   )
 };
 
