@@ -14,14 +14,36 @@ import AddAnswer from './AddAnswer.jsx';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
 const Question = (props) => {
-  let answers = Object.values(props.question.answers);
-  console.log('answers in question.jsx', answers);
 
+  const [count, setCount] = useState(2)
 
-  let sortedByHelpfulness = answers.sort((question1, question2) => { question1.helpfulness - question2.helpfulness} )
-  //Could also limit length of answers array
+  const showMoreAnswers = (count) => {
+    if (count+2 < sortedByHelpfulness.length) {
+      let newCount = count + 2
+      console.log(newCount)
+      setCount(newCount)
+    } else if (count+1 <= sortedByHelpfulness.length) {
+      let newCount = count + 1
+      console.log(newCount)
+      setCount(newCount)
+    }
+  }
 
-  //conditionally render the add answer form or create modal for on click function
+  let sortedByHelpfulness = Object.values(props.question.answers).sort((question1, question2) => { question1.helpfulness - question2.helpfulness })
+
+  const Answers = ({ answers }) => {
+    return (
+      <ul>
+        {answers.map((answer) => {
+          return (
+            <li key={answer.id}><Answer answer={answer} /> </li>
+          )
+        })}
+        {/* conditionally render the click button, only display if more answers are available */}
+        <Button variant='outline-primary' onClick={() => { showMoreAnswers(count) }}>Load More Answers</Button>
+      </ul>
+    )
+  }
 
   return (
     <>
@@ -51,15 +73,7 @@ const Question = (props) => {
         </Row>
 
         <Row>
-          <ul>
-            {answers.map((answer) => {
-              return (
-                <li key={answer.id}><Answer answer={answer} /> </li>
-              )
-            })}
-            {/* conditionally render the click button, only display if more answers are available */}
-            <Button variant='outline-primary'>Load More Answers</Button>
-          </ul>
+          <Answers answers={sortedByHelpfulness.slice(0, count)} />
         </Row>
 
       </Container>

@@ -21,35 +21,35 @@ class QA_Module extends React.Component {
     }
 
     //Bound Functions
-this.handleGetMoreQuestions = this.handleGetMoreQuestions.bind(this);
-this.handleFilterQuestions = this.handleFilterQuestions.bind(this);
+    this.handleGetMoreQuestions = this.handleGetMoreQuestions.bind(this);
+    this.handleFilterQuestions = this.handleFilterQuestions.bind(this);
   }
 
 
   //Methods -------------------------- (Remember to Bind)
 
-handleGetMoreQuestions() {
-  if (this.state.count + 2 < this.state.allQuestions.length) {
+  handleGetMoreQuestions() {
+    if (this.state.count + 2 < this.state.allQuestions.length) {
+      this.setState({
+        count: this.state.count + 2
+      })
+    } else if (this.state.count + 1 <= this.state.allQuestions.length) {
+      this.setState({
+        count: this.state.count + 1
+      })
+    }
+  }
+
+  handleFilterQuestions(filterFromSB) {
+    let filteredSet = this.state.product.results.filter((question => question.question_body.includes(filterFromSB)));
+
+    // console.log('Filtered Set: ', filteredSet);
+
     this.setState({
-      count: this.state.count+2
-    })
-  } else if (this.state.count + 1 <= this.state.allQuestions.length) {
-    this.setState({
-      count: this.state.count+1
+      allQuestions: filteredSet,
+      count: 2,
     })
   }
-}
-
-handleFilterQuestions(filterFromSB) {
-  let filteredSet = this.state.product.results.filter((question => question.question_body.includes(filterFromSB)));
-
-  // console.log('Filtered Set: ', filteredSet);
-
-  this.setState({
-    allQuestions: filteredSet,
-    count: 2,
-  })
-}
 
   render() {
     return (
@@ -58,7 +58,7 @@ handleFilterQuestions(filterFromSB) {
 
           <Row>
             <p>QUESTIONS & ANSWERS</p>
-            <SearchBar handleFilterQuestions={this.handleFilterQuestions}/>
+            <SearchBar handleFilterQuestions={this.handleFilterQuestions} />
           </Row>
 
           <Row>
@@ -66,7 +66,11 @@ handleFilterQuestions(filterFromSB) {
           </Row>
 
           <Row>
-            <Button variant='outline-primary' onClick={this.handleGetMoreQuestions}>MORE ANSWERED QUESTIONS</Button>
+            <Button
+              variant='outline-primary'
+              onClick={this.handleGetMoreQuestions}>
+              MORE ANSWERED QUESTIONS
+            </Button>
             <AddQuestion />
           </Row>
         </Container>
