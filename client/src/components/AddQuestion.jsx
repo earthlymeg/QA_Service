@@ -6,6 +6,7 @@ component to house the form, get user input and then call the function for routi
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, Modal, Form } from 'react-bootstrap';
+import axios from 'axios';
 
 
 const AddQuestion = (props) => {
@@ -18,8 +19,14 @@ const AddQuestion = (props) => {
 
   const onSubmit = (data) => {
     console.log(data);
-    handleClose();
+    axios.post(`http://52.26.193.201:3000/qa/${props.id}`, data)
+      .then((response) => {
+        console.log('response', response);
+      })
+      .then(handleClose)
+      .then(props.handleGetQuestionsAfterSubmit)
   };
+  console.log('props.id: ', props.id);
 
   return (
     <>

@@ -7,6 +7,7 @@ Needs to have ability to report
 */
 
 import React, { useState } from 'react';
+import axios from 'axios';
 import Answer from './Answer.jsx';
 import Helpful from './Helpful.jsx';
 import Report from './Report.jsx';
@@ -16,31 +17,56 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 const Question = (props) => {
 
   const [count, setCount] = useState(2)
+  const [answers, setAnswers] = useState(props.question.answers)
+
+  const updateAnswersAfterSubmit = () => {
+    axios.get(`http://52.26.193.201:3000/qa/${props.question.question_id}/answers`)
+      .then((response) => {
+        setAnswers(response.data.results)
+      })
+  }
 
   const showMoreAnswers = (count) => {
-    if (count+2 < sortedByHelpfulness.length) {
+    if (count+2 < sortedAnswers.length) {
       let newCount = count + 2
-      console.log(newCount)
       setCount(newCount)
-    } else if (count+1 <= sortedByHelpfulness.length) {
+    } else if (count+1 <= sortedAnswers.length) {
       let newCount = count + 1
-      console.log(newCount)
       setCount(newCount)
     }
   }
 
-  let sortedByHelpfulness = Object.values(props.question.answers).sort((question1, question2) => { question1.helpfulness - question2.helpfulness })
+  let answerList = Object.values(answers);
+  let sellerResponses = answerList.filter((answer) => (answer.answerer_name === 'Seller')).sort((question1, question2) => { return question2.helpfulness - question1.helpfulness });
+  let nonSellerResponses = answerList.filter((answer) => (answer.answerer_name !== 'Seller')).sort((question1, question2) => { return question2.helpfulness - question1.helpfulness });
 
-  const Answers = ({ answers }) => {
+  let sortedAnswers = sellerResponses.concat(nonSellerResponses);
+
+  //Component w/ conditional rendering
+  const Answers = (props) => {
+
+    //conditional function for button rendering
+    const moreAnswers = () => {
+      if (sortedAnswers.length > count) {
+        return (
+          <Button variant='outline-primary' onClick={() => { showMoreAnswers(count) }}>Load More Answers</Button>
+        )
+      } else {
+        return <></>
+      }
+    }
+    //Answers component return
     return (
       <ul>
-        {answers.map((answer) => {
+        {props.answers.map((answer) => {
           return (
-            <li key={answer.id}><Answer answer={answer} /> </li>
+            <li key={answer.id}>
+              <Answer answer={answer} />
+            </li>
           )
         })}
-        {/* conditionally render the click button, only display if more answers are available */}
-        <Button variant='outline-primary' onClick={() => { showMoreAnswers(count) }}>Load More Answers</Button>
+
+          {moreAnswers()}
       </ul>
     )
   }
@@ -62,7 +88,7 @@ const Question = (props) => {
                 helpfulness={props.question.question_helpfulness}
                 type='question' /> |
 
-                <AddAnswer /> |
+                <AddAnswer id={props.question.question_id} updateAnswersAfterSubmit={updateAnswersAfterSubmit}/> |
 
                 <Report
                 id={props.question.question_id}
@@ -73,7 +99,7 @@ const Question = (props) => {
         </Row>
 
         <Row>
-          <Answers answers={sortedByHelpfulness.slice(0, count)} />
+          <Answers answers={sortedAnswers.slice(0, count)} />
         </Row>
 
       </Container>

@@ -1,27 +1,38 @@
 //Helpful component to be used by questions answers and reviews
 
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import {Button} from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 const Helpful = (props) => {
 
   //Use setstate and have it update the count and then rerender the component to display the new count
+  const [helpfulness, setHelpfulness] = useState(props.helpfulness)
+  const [onceQuestion, setOnceQuestion] = useState(0)
+  const [onceAnswer, setOnceAnswer] = useState(0)
 
   const incrementHelpfulness = () => {
-    if (props.type === 'question') {
-      console.log('Question id: ',props.id);
-      // axios.put(`/qa/question/${props.id}/helpful`)
+    if ( props.type === 'question' && onceQuestion === 0 ) {
+      console.log('Question id: ', props.id);
+      axios.put(`http://52.26.193.201:3000/qa/question/${props.id}/helpful`)
+        .then((response) => {
+          setHelpfulness(helpfulness + 1)
+          setOnceQuestion(1)
+        })
     }
 
-    if (props.type === 'answer') {
-      console.log('Answer id: ',props.id);
-      // axios.put(`/qa/answer/${props.id}/helpful`)
+    if ( props.type === 'answer' && onceAnswer === 0 ) {
+      console.log('Answer id: ', props.id);
+      axios.put(`http://52.26.193.201:3000/qa/answer/${props.id}/helpful`)
+        .then((response) => {
+          setHelpfulness(helpfulness + 1)
+          setOnceAnswer(1)
+        })
     }
   }
-return (
-    <Button variant='link' onClick={incrementHelpfulness}>Helpful? Yes ({props.helpfulness})</Button>
-)
+  return (
+    <Button variant='link' onClick={incrementHelpfulness}>Helpful? Yes ({helpfulness})</Button>
+  )
 }
 
 export default Helpful;

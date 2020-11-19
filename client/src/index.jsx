@@ -5,9 +5,8 @@ import axios from 'axios';
 
 let product;
 
-axios.get('http://52.26.193.201:3000/qa/2')
+axios.get('http://52.26.193.201:3000/qa/3')
     .then((response) => {
-      // console.log(response)
       product = response.data;
       ReactDOM.render(<QA_Module product={product}/>, document.getElementById('app'));
     })

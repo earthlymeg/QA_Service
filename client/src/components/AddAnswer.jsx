@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Button, Modal, Form } from 'react-bootstrap';
+import axios from 'axios';
+
 
 const AddAnswer = (props) => {
   const [show, setShow] = useState(false);
@@ -11,12 +13,21 @@ const AddAnswer = (props) => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    if (data) {
-      console.log(data);
-      handleClose();
-    }
-  };
+    //For adding photos, unsure what format POST request wants them in though:
+    // const urls = data.photos.split(',');
+    // let photos = { photos: []}
+    // for (let i = 0; i < urls.length; i++) {
+    //   photos.photos.push(urls[i].trim())
+    // }
+    // Object.assign(data, photos);
 
+    axios.post(`http://52.26.193.201:3000/qa/${props.id}/answers`, data)
+      .then((response) => {
+        console.log(response)
+      })
+      .then(handleClose)
+      .then(props.updateAnswersAfterSubmit)
+  };
 
   return (
     <>
@@ -75,6 +86,17 @@ const AddAnswer = (props) => {
               </Form.Text>
 
             </Form.Group>
+
+            {/* <Form.Group controlId="formPictures">
+              <Form.Label>Pictures</Form.Label>
+
+              <Form.Control
+                type='text'
+                name='photos'
+                placeholder='Seperate photo-links with commas'
+                ref={register}
+              />
+            </Form.Group> */}
 
             <Form.Control type="submit" />
 

@@ -13,8 +13,6 @@ import moment from 'moment';
 import { Container, Row, Col, Image } from 'react-bootstrap';
 
 const Answer = (props) => {
-  // console.log('props in Answer: ', props)
-
   const Pictures = ({ pictures }) => {
     if (pictures.length) {
       return (

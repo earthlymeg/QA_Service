@@ -2,18 +2,25 @@
 
 import React from 'react';
 import { Button } from 'react-bootstrap';
+import axios from 'axios';
 
 
 const Report = (props) => {
   const handleReport = () => {
     if (props.type === 'question') {
-      console.log('Question id: ',props.id);
-      // axios.put(`/qa/question/${props.id}/helpful`)
+      console.log('Question id: ', props.id);
+      axios.put(`http://52.26.193.201:3000/qa/question/${props.id}/report`)
+        .then((response) => {
+          console.log(response);
+        })
     }
 
     if (props.type === 'answer') {
-      console.log('Answer id: ',props.id);
-      // axios.put(`/qa/answer/${props.id}/helpful`)
+      console.log('Answer id: ', props.id);
+      axios.put(`http://52.26.193.201:3000/qa/answer/${props.id}/report`)
+        .then((response) => {
+          console.log(response);
+        })
     }
   }
   return (
