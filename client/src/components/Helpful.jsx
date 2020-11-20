@@ -14,7 +14,7 @@ const Helpful = (props) => {
   const incrementHelpfulness = () => {
     if ( props.type === 'question' && onceQuestion === 0 ) {
       console.log('Question id: ', props.id);
-      axios.put(`http://52.26.193.201:3000/qa/question/${props.id}/helpful`)
+      axios.put(`http://52.26.193.201:3000/qa/question/${props.id}/helpful`, { question_id: props.id })
         .then((response) => {
           setHelpfulness(helpfulness + 1)
           setOnceQuestion(1)
@@ -23,7 +23,7 @@ const Helpful = (props) => {
 
     if ( props.type === 'answer' && onceAnswer === 0 ) {
       console.log('Answer id: ', props.id);
-      axios.put(`http://52.26.193.201:3000/qa/answer/${props.id}/helpful`)
+      axios.put(`http://52.26.193.201:3000/qa/answer/${props.id}/helpful`, { answer_id: props.id })
         .then((response) => {
           setHelpfulness(helpfulness + 1)
           setOnceAnswer(1)
@@ -31,7 +31,7 @@ const Helpful = (props) => {
     }
   }
   return (
-    <Button variant='link' onClick={incrementHelpfulness}>Helpful? Yes ({helpfulness})</Button>
+    <Button size='sm' variant='link' onClick={incrementHelpfulness}>Helpful? Yes ({helpfulness})</Button>
   )
 }
 

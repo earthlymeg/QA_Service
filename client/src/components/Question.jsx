@@ -27,10 +27,10 @@ const Question = (props) => {
   }
 
   const showMoreAnswers = (count) => {
-    if (count+2 < sortedAnswers.length) {
+    if (count + 2 < sortedAnswers.length) {
       let newCount = count + 2
       setCount(newCount)
-    } else if (count+1 <= sortedAnswers.length) {
+    } else if (count + 1 <= sortedAnswers.length) {
       let newCount = count + 1
       setCount(newCount)
     }
@@ -61,12 +61,12 @@ const Question = (props) => {
         {props.answers.map((answer) => {
           return (
             <li key={answer.id}>
-              <Answer answer={answer} />
+              <Answer answer={answer} handleGetQuestionsAfterSubmit={props.handleGetQuestionsAfterSubmit}  updateAnswersAfterSubmit={updateAnswersAfterSubmit} productId={props.productId} id={answer.id}/>
             </li>
           )
         })}
 
-          {moreAnswers()}
+        {moreAnswers()}
       </ul>
     )
   }
@@ -86,20 +86,29 @@ const Question = (props) => {
               <Helpful
                 id={props.question.question_id}
                 helpfulness={props.question.question_helpfulness}
-                type='question' /> |
+                type='question'
+                productId={props.productId}
+              /> |
 
-                <AddAnswer id={props.question.question_id} updateAnswersAfterSubmit={updateAnswersAfterSubmit}/> |
-
-                <Report
+              <AddAnswer
                 id={props.question.question_id}
-                type='question' />
+                updateAnswersAfterSubmit={updateAnswersAfterSubmit}
+                productId={props.productId}
+              /> |
+
+              <Report
+                id={props.question.question_id}
+                type='question'
+                productId={props.productId}
+                handleGetQuestionsAfterSubmit={props.handleGetQuestionsAfterSubmit}
+              />
             </>
           </Col>
 
         </Row>
 
         <Row>
-          <Answers answers={sortedAnswers.slice(0, count)} />
+          <Answers answers={sortedAnswers.slice(0, count)} handleGetQuestionsAfterSubmit={props.handleGetQuestionsAfterSubmit} productId={props.productId} />
         </Row>
 
       </Container>

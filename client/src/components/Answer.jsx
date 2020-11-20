@@ -28,7 +28,7 @@ const Answer = (props) => {
           </Row>
 
           <Row>
-            <p>by {props.answer.answerer_name}, {moment(props.answer.date).format("MMM Do YYYY")} | <Helpful helpfulness={props.answer.helpfulness} /> | <a href='#'>Report</a></p>
+            <p>by {props.answer.answerer_name}, {moment(props.answer.date).format("MMM Do YYYY")} | <Helpful helpfulness={props.answer.helpfulness} /> | <Report type='answer' handleGetQuestionsAfterSubmit={props.handleGetQuestionsAfterSubmit} productId={props.productId} id={props.id}/> </p>
           </Row>
         </Container>
       )
@@ -42,7 +42,7 @@ const Answer = (props) => {
     <div>
       <p><span>A: </span>{props.answer.body}</p>
 
-      <p>by {props.answer.answerer_name}, {moment(props.answer.date).format("MMM Do YYYY")} | <Helpful id={props.answer.id} helpfulness={props.answer.helpfulness} type='answer' /> | <Report id={props.answer.id} type='answer' /></p>
+      <p>by {props.answer.answerer_name}, {moment(props.answer.date).format("MMM Do YYYY")} | <Helpful id={props.answer.id} helpfulness={props.answer.helpfulness} type='answer' /> | <Report id={props.answer.id} type='answer' updateAnswersAfterSubmit={props.updateAnswersAfterSubmit} productId={props.productId}/></p>
 
       <Pictures pictures={props.answer.photos} />
     </div>

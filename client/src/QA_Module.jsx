@@ -50,16 +50,14 @@ class QA_Module extends React.Component {
     })
   }
 
-  handleGetQuestionsAfterSubmit() {
-    let product;
-
-    axios.get(`http://52.26.193.201:3000/qa/${this.state.product.id}`)
-    .then((response) => {
-      product = response.data;
-      this.setState({
-        product: product,
+  handleGetQuestionsAfterSubmit(prodId) {
+    axios.get(`http://52.26.193.201:3000/qa/${prodId}?count=100`)
+      .then((response) => {
+        this.setState({
+          product: response.data,
+          allQuestions: response.data.results,
+        })
       })
-    })
   }
 
   render() {
@@ -68,22 +66,29 @@ class QA_Module extends React.Component {
         <Container>
 
           <Row>
-            <Container>QUESTIONS & ANSWERS</Container>
+            <Col>
+              QUESTIONS & ANSWERS
+            </Col>
+
             <SearchBar handleFilterQuestions={this.handleFilterQuestions} />
           </Row>
 
           <Row>
-            <QA_List questions={this.state.allQuestions.slice(0, this.state.count)} productId={this.props.product.product_id}/>
+            <QA_List questions={this.state.allQuestions.slice(0, this.state.count)} productId={this.props.product.product_id} handleGetQuestionsAfterSubmit={this.handleGetQuestionsAfterSubmit} />
           </Row>
 
           <Row>
-            <Button
-              variant='outline-primary'
-              onClick={this.handleGetMoreQuestions}>
-              MORE ANSWERED QUESTIONS
-            </Button>
-            <AddQuestion id={this.props.product.product_id} handleGetQuestionsAfterSubmit={this.handleGetQuestionsAfterSubmit}/>
+            <Col>
+              <Button
+                variant='outline-primary'
+                onClick={this.handleGetMoreQuestions}>
+                MORE ANSWERED QUESTIONS
+              </Button>
+
+              <AddQuestion id={this.state.product.product_id} handleGetQuestionsAfterSubmit={this.handleGetQuestionsAfterSubmit} />
+            </Col>
           </Row>
+
         </Container>
       </>
     )

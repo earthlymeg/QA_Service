@@ -23,7 +23,7 @@ const QA_List = (props) => {
             {props.questions.map((question) => {
               return (
                 <div key={question.question_id}>
-                  <Question question={question} />
+                  <Question question={question} handleGetQuestionsAfterSubmit={props.handleGetQuestionsAfterSubmit} productId={props.productId}/>
                 </div>
               )
             })}

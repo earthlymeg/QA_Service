@@ -13,13 +13,13 @@ const AddAnswer = (props) => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    //For adding photos, unsure what format POST request wants them in though:
+    // // For adding photos, unsure what format POST request wants them in though:
     // const urls = data.photos.split(',');
     // let photos = { photos: []}
     // for (let i = 0; i < urls.length; i++) {
     //   photos.photos.push(urls[i].trim())
     // }
-    // Object.assign(data, photos);
+    // Object.assign(data, photos, {question_id: props.id});
 
     axios.post(`http://52.26.193.201:3000/qa/${props.id}/answers`, data)
       .then((response) => {
@@ -31,7 +31,7 @@ const AddAnswer = (props) => {
 
   return (
     <>
-      <Button variant="link" onClick={handleShow}>
+      <Button size='sm' variant="link" onClick={handleShow}>
         Add An Answer
       </Button>
 

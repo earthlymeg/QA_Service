@@ -18,15 +18,19 @@ const AddQuestion = (props) => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
-    axios.post(`http://52.26.193.201:3000/qa/${props.id}`, data)
+    let id = parseInt(props.id);
+    Object.assign(data, { product_id: id });
+
+    console.log('data in submit: ', data)
+    console.log('props.id inside add Q: ', props.id)
+
+    axios.post(`http://52.26.193.201:3000/qa/${id}`, data)
       .then((response) => {
-        console.log('response', response);
+        console.log(response);
       })
       .then(handleClose)
-      .then(props.handleGetQuestionsAfterSubmit)
+      .then(() => { props.handleGetQuestionsAfterSubmit(id) })
   };
-  console.log('props.id: ', props.id);
 
   return (
     <>
@@ -53,7 +57,6 @@ const AddQuestion = (props) => {
                 placeholder='Name'
                 ref={register}
               />
-
             </Form.Group>
 
             <Form.Group controlId="formQuestion">
@@ -66,7 +69,6 @@ const AddQuestion = (props) => {
                 placeholder='Ask a Question'
                 ref={register}
               />
-
             </Form.Group>
 
             <Form.Group controlId="formEmail">
@@ -83,7 +85,6 @@ const AddQuestion = (props) => {
               <Form.Text className="text-muted">
                 We'll never share your email with anyone else.
               </Form.Text>
-
             </Form.Group>
 
             <Form.Control type="submit" />

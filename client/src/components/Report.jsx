@@ -7,24 +7,25 @@ import axios from 'axios';
 
 const Report = (props) => {
   const handleReport = () => {
+
     if (props.type === 'question') {
-      console.log('Question id: ', props.id);
-      axios.put(`http://52.26.193.201:3000/qa/question/${props.id}/report`)
+      axios.put(`http://52.26.193.201:3000/qa/question/${props.id}/report`, { question_id: props.id })
         .then((response) => {
           console.log(response);
         })
+        .then(() => {props.handleGetQuestionsAfterSubmit(props.productId)})
     }
 
     if (props.type === 'answer') {
-      console.log('Answer id: ', props.id);
-      axios.put(`http://52.26.193.201:3000/qa/answer/${props.id}/report`)
+      axios.put(`http://52.26.193.201:3000/qa/answer/${props.id}/report`, { answer_id: props.id })
         .then((response) => {
           console.log(response);
         })
+        .then(() => {props.updateAnswersAfterSubmit(props.productId)})
     }
   }
   return (
-    <Button variant='link' onClick={handleReport}>Report</Button>
+    <Button size='sm' variant='link' onClick={handleReport}>Report</Button>
   )
 }
 
