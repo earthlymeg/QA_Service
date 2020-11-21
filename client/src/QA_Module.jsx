@@ -3,8 +3,8 @@ import axios from 'axios';
 import QA_List from './components/QA_List.jsx';
 import SearchBar from './components/SearchBar.jsx';
 import AddQuestion from './components/AddQuestion.jsx';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../dist/styles.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
 class QA_Module extends React.Component {
@@ -42,7 +42,7 @@ class QA_Module extends React.Component {
   }
 
   handleFilterQuestions(filterFromSB) {
-    let filteredSet = this.state.product.results.filter((question => question.question_body.includes(filterFromSB)));
+    let filteredSet = this.state.product.results.filter((question => question.question_body.toLowerCase().includes(filterFromSB)));
 
     this.setState({
       allQuestions: filteredSet,

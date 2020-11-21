@@ -19,7 +19,7 @@ import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap'
 
 const SearchBar = (props) => {
   const { register, handleSubmit } = useForm();
-  const onSubmit = filter => { props.handleFilterQuestions(filter.filter) }
+  const onSubmit = filter => { props.handleFilterQuestions(filter.filter.toLowerCase()) }
 
 
   return (
