@@ -47,6 +47,8 @@ class QA_Module extends React.Component {
   }
 
   render() {
+    const questionsLength = this.state.allQuestions.length;
+
     return (
       <>
         <Container>
@@ -71,9 +73,10 @@ class QA_Module extends React.Component {
 
               <Row>
                 <Col>
+                {questionsLength !== 1 ?
                   <Accordion.Toggle as={Button} variant="outline-primary" eventKey="1" onClick={() => {this.setState({open: !this.state.open})}}>
                     {this.state.open ? 'See less questions' : 'See more questions'}
-                  </Accordion.Toggle>
+                  </Accordion.Toggle> : <></> }
                 </Col>
                 <Col style={{textAlign: 'right'}}>
                   <AddQuestion id={this.state.product.product_id} handleGetQuestionsAfterSubmit={this.handleGetQuestionsAfterSubmit} />
