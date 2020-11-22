@@ -5,7 +5,7 @@ import SearchBar from './components/SearchBar.jsx';
 import AddQuestion from './components/AddQuestion.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../dist/styles.css';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Accordion, Card } from 'react-bootstrap';
 
 class QA_Module extends React.Component {
   constructor(props) {
@@ -17,11 +17,10 @@ class QA_Module extends React.Component {
     this.state = {
       product: props.product,
       allQuestions: props.product.results,
-      count: 2
+      open: false,
     }
 
     //Bound Functions
-    this.handleGetMoreQuestions = this.handleGetMoreQuestions.bind(this);
     this.handleFilterQuestions = this.handleFilterQuestions.bind(this);
     this.handleGetQuestionsAfterSubmit = this.handleGetQuestionsAfterSubmit.bind(this);
   }
@@ -29,24 +28,11 @@ class QA_Module extends React.Component {
 
   //Methods -------------------------- (Remember to Bind)
 
-  handleGetMoreQuestions() {
-    if (this.state.count + 2 < this.state.allQuestions.length) {
-      this.setState({
-        count: this.state.count + 2
-      })
-    } else if (this.state.count + 1 <= this.state.allQuestions.length) {
-      this.setState({
-        count: this.state.count + 1
-      })
-    }
-  }
-
   handleFilterQuestions(filterFromSB) {
     let filteredSet = this.state.product.results.filter((question => question.question_body.toLowerCase().includes(filterFromSB)));
 
     this.setState({
       allQuestions: filteredSet,
-      count: 2,
     })
   }
 
@@ -73,21 +59,31 @@ class QA_Module extends React.Component {
             <SearchBar handleFilterQuestions={this.handleFilterQuestions} />
           </Row>
 
-          <Row>
-            <QA_List questions={this.state.allQuestions.slice(0, this.state.count)} productId={this.props.product.product_id} handleGetQuestionsAfterSubmit={this.handleGetQuestionsAfterSubmit} />
-          </Row>
+          <Accordion>
+            <Card style={{ border: "none" }}>
+              <Card.Body>
+                <QA_List questions={this.state.allQuestions.slice(0, 2)} productId={this.props.product.product_id} handleGetQuestionsAfterSubmit={this.handleGetQuestionsAfterSubmit} />
+              </Card.Body>
 
-          <Row>
-            <Col>
-              <Button
-                variant='outline-primary'
-                onClick={this.handleGetMoreQuestions}>
-                MORE ANSWERED QUESTIONS
-              </Button>
+              <Accordion.Collapse eventKey="1">
+                <Card.Body><QA_List questions={this.state.allQuestions.slice(2)} productId={this.props.product.product_id} handleGetQuestionsAfterSubmit={this.handleGetQuestionsAfterSubmit} /></Card.Body>
+              </Accordion.Collapse>
 
-              <AddQuestion id={this.state.product.product_id} handleGetQuestionsAfterSubmit={this.handleGetQuestionsAfterSubmit} />
-            </Col>
-          </Row>
+              <Row>
+                <Col>
+                  <Accordion.Toggle as={Button} variant="outline-primary" eventKey="1" onClick={() => {this.setState({open: !this.state.open})}}>
+                    {this.state.open ? 'See less questions' : 'See more questions'}
+                  </Accordion.Toggle>
+                </Col>
+                <Col style={{textAlign: 'right'}}>
+                  <AddQuestion id={this.state.product.product_id} handleGetQuestionsAfterSubmit={this.handleGetQuestionsAfterSubmit} />
+                </Col>
+              </Row>
+
+
+            </Card>
+          </Accordion>
+
 
         </Container>
       </>

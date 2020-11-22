@@ -12,12 +12,12 @@ import Answer from './Answer.jsx';
 import Helpful from './Helpful.jsx';
 import Report from './Report.jsx';
 import AddAnswer from './AddAnswer.jsx';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Accordion, Card } from 'react-bootstrap';
 
 const Question = (props) => {
 
-  const [count, setCount] = useState(2)
   const [answers, setAnswers] = useState(props.question.answers)
+  const [open, setOpen] = useState(false)
 
   const updateAnswersAfterSubmit = () => {
     axios.get(`http://52.26.193.201:3000/qa/${props.question.question_id}/answers`)
@@ -26,15 +26,6 @@ const Question = (props) => {
       })
   }
 
-  const showMoreAnswers = (count) => {
-    if (count + 2 < sortedAnswers.length) {
-      let newCount = count + 2
-      setCount(newCount)
-    } else if (count + 1 <= sortedAnswers.length) {
-      let newCount = count + 1
-      setCount(newCount)
-    }
-  }
 
   let answerList = Object.values(answers);
   let sellerResponses = answerList.filter((answer) => (answer.answerer_name === 'Seller')).sort((question1, question2) => { return question2.helpfulness - question1.helpfulness });
@@ -45,30 +36,29 @@ const Question = (props) => {
   //Component w/ conditional rendering
   const Answers = (props) => {
 
-    //conditional function for button rendering
-    const moreAnswers = () => {
-      if (sortedAnswers.length > count) {
-        return (
-          <Button variant='outline-primary' onClick={() => { showMoreAnswers(count) }}>Load More Answers</Button>
-        )
-      } else {
-        return <></>
-      }
-    }
     //Answers component return
     return (
       <ul>
         {props.answers.map((answer) => {
           return (
             <li key={answer.id}>
-              <Answer answer={answer} handleGetQuestionsAfterSubmit={props.handleGetQuestionsAfterSubmit}  updateAnswersAfterSubmit={updateAnswersAfterSubmit} productId={props.productId} id={answer.id}/>
+              <Answer answer={answer} handleGetQuestionsAfterSubmit={props.handleGetQuestionsAfterSubmit} updateAnswersAfterSubmit={updateAnswersAfterSubmit} productId={props.productId} id={answer.id} />
             </li>
           )
         })}
-
-        {moreAnswers()}
       </ul>
     )
+  }
+
+  const ShowMoreAnswers = () => {
+    if (sortedAnswers.length > 2) {
+      return (
+        <Accordion.Toggle as={Button} variant="outline-primary" eventKey="1" onClick={() => setOpen(!open)}>
+          {open ? 'See less answers' : 'See more answers'}
+        </Accordion.Toggle>
+      )
+    }
+    return <></>
   }
 
   return (
@@ -81,35 +71,53 @@ const Question = (props) => {
             <h3>Q: {props.question.question_body} </h3>
           </Col>
 
-          <Col>
-            <>
-              <Helpful
-                id={props.question.question_id}
-                helpfulness={props.question.question_helpfulness}
-                type='question'
-                productId={props.productId}
-              /> |
+
+          <div className='justify-content-right'>
+            <Helpful
+              id={props.question.question_id}
+              helpfulness={props.question.question_helpfulness}
+              type='question'
+              productId={props.productId}
+            /> |
 
               <AddAnswer
-                id={props.question.question_id}
-                updateAnswersAfterSubmit={updateAnswersAfterSubmit}
-                productId={props.productId}
-              /> |
+              id={props.question.question_id}
+              updateAnswersAfterSubmit={updateAnswersAfterSubmit}
+              productId={props.productId}
+            /> |
 
               <Report
-                id={props.question.question_id}
-                type='question'
-                productId={props.productId}
-                handleGetQuestionsAfterSubmit={props.handleGetQuestionsAfterSubmit}
-              />
-            </>
-          </Col>
+              id={props.question.question_id}
+              type='question'
+              productId={props.productId}
+              handleGetQuestionsAfterSubmit={props.handleGetQuestionsAfterSubmit}
+            />
+          </div>
+
 
         </Row>
 
-        <Row>
-          <Answers answers={sortedAnswers.slice(0, count)} handleGetQuestionsAfterSubmit={props.handleGetQuestionsAfterSubmit} productId={props.productId} />
-        </Row>
+
+        <Accordion>
+          <Card style={{ border: "none" }}>
+            <Row>
+              <Card.Body style={{ padding: '0px' }}>
+                <Answers answers={sortedAnswers.slice(0, 2)} handleGetQuestionsAfterSubmit={props.handleGetQuestionsAfterSubmit} productId={props.productId} />
+              </Card.Body>
+            </Row>
+            <Accordion.Collapse eventKey="1">
+              <Row>
+                <Card.Body style={{ padding: '0px' }}>
+                  <Answers answers={sortedAnswers.slice(2)} handleGetQuestionsAfterSubmit={props.handleGetQuestionsAfterSubmit} productId={props.productId} />
+                </Card.Body>
+              </Row>
+            </Accordion.Collapse>
+            <Col>
+              <ShowMoreAnswers />
+            </Col>
+          </Card>
+        </Accordion>
+
 
       </Container>
     </>

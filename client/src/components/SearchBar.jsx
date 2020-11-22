@@ -38,7 +38,7 @@ const SearchBar = (props) => {
             />
 
             <InputGroup.Append>
-              <Button variant='outline-primary' onClick={handleSubmit(onSubmit)}>Search!</Button>
+              <Button variant='outline-primary' onClick={handleSubmit(onSubmit)}><i className="fa fa-search"></i></Button>
             </InputGroup.Append>
 
           </InputGroup>
