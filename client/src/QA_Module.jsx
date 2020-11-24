@@ -21,14 +21,14 @@ class QA_Module extends React.Component {
     }
 
     //Bound Functions
-    this.handleFilterQuestions = this.handleFilterQuestions.bind(this);
+    // this.handleFilterQuestions = this.handleFilterQuestions.bind(this);
     this.handleGetQuestionsAfterSubmit = this.handleGetQuestionsAfterSubmit.bind(this);
   }
 
 
   //Methods -------------------------- (Remember to Bind)
 
-  handleFilterQuestions(filterFromSB) {
+  handleFilterQuestions = (filterFromSB) => {
     let filteredSet = this.state.product.results.filter((question => question.question_body.toLowerCase().includes(filterFromSB)));
 
     this.setState({
