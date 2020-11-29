@@ -34,13 +34,13 @@ const AddQuestion = (props) => {
 
   return (
     <>
-      <Button variant="outline-primary" onClick={handleShow}>
+      <Button variant="warning" onClick={handleShow}>
         Add A Question
       </Button>
 
       <Modal show={show} onHide={handleClose}>
 
-        <Modal.Header closeButton>
+        <Modal.Header closeButton style={{backgroundColor: '#FFC107'}}>
           <Modal.Title> Add your question! </Modal.Title>
         </Modal.Header>
 
@@ -87,7 +87,7 @@ const AddQuestion = (props) => {
               </Form.Text>
             </Form.Group>
 
-            <Form.Control type="submit" />
+            <Form.Control type="submit" style={{backgroundColor: '#FFC107'}}/>
 
           </Form>
         </Modal.Body>

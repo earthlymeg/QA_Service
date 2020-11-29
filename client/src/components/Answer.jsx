@@ -20,13 +20,13 @@ const Answer = (props) => {
           <Row>
             {props.answer.photos.map((photo) => {
               return (
-                <Image key={photo} src={photo} height='171' width='180' thumbnail />
+                <Image key={photo} src={photo} height='170' width='180' thumbnail />
               )
             })}
           </Row>
 
           <Row>
-            <p>by {props.answer.answerer_name}, {moment(props.answer.date).format("MMM Do YYYY")} | <Helpful helpfulness={props.answer.helpfulness} /> | <Report type='answer' handleGetQuestionsAfterSubmit={props.handleGetQuestionsAfterSubmit} productId={props.productId} id={props.id} /> </p>
+            <p style={{color: '#AAAAAA', fontSize: '14px'}}>by {props.answer.answerer_name}, {moment(props.answer.date).format("MMM Do YYYY")} | <Helpful helpfulness={props.answer.helpfulness} /> | <Report type='answer' handleGetQuestionsAfterSubmit={props.handleGetQuestionsAfterSubmit} productId={props.productId} id={props.id} /> </p>
           </Row>
         </Container>
       )
@@ -39,10 +39,10 @@ const Answer = (props) => {
   return (
     <Col>
       <Row>
-        <p><span>A: </span>{props.answer.body}</p>
+        <p><span style={{fontWeight: 'bold'}}>A: </span>{props.answer.body}</p>
       </Row>
       <Row>
-        <p>by {props.answer.answerer_name}, {moment(props.answer.date).format("MMM Do YYYY")} | <Helpful id={props.answer.id} helpfulness={props.answer.helpfulness} type='answer' /> | <Report id={props.answer.id} type='answer' updateAnswersAfterSubmit={props.updateAnswersAfterSubmit} productId={props.productId} /></p>
+        <p style={{color: '#AAAAAA', fontSize: '14px'}}>by {props.answer.answerer_name}, {moment(props.answer.date).format("MMM Do YYYY")} | <Helpful id={props.answer.id} helpfulness={props.answer.helpfulness} type='answer' /> | <Report id={props.answer.id} type='answer' updateAnswersAfterSubmit={props.updateAnswersAfterSubmit} productId={props.productId} /></p>
 
         <Pictures pictures={props.answer.photos} />
       </Row>

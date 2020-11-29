@@ -31,13 +31,13 @@ const AddAnswer = (props) => {
 
   return (
     <>
-      <Button size='sm' variant="link" onClick={handleShow}>
+      <Button size='sm' variant="link" style={{color: '#AAAAAA', marginBottom: '4px'}} onClick={handleShow}>
         Add An Answer
       </Button>
 
       <Modal show={show} onHide={handleClose}>
 
-        <Modal.Header closeButton>
+        <Modal.Header closeButton style={{backgroundColor: '#FFC107'}}>
           <Modal.Title> Add Your Answer! </Modal.Title>
         </Modal.Header>
 
@@ -98,7 +98,7 @@ const AddAnswer = (props) => {
               />
             </Form.Group> */}
 
-            <Form.Control type="submit" />
+            <Form.Control type="submit" style={{backgroundColor: '#FFC107'}}/>
 
           </Form>
         </Modal.Body>

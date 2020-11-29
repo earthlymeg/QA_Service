@@ -25,7 +25,7 @@ const Report = (props) => {
     }
   }
   return (
-    <Button size='sm' variant='link' onClick={handleReport}>Report</Button>
+    <Button size='sm' variant='link' style={{color: '#AAAAAA', marginBottom: '4px'}} onClick={handleReport}>Report</Button>
   )
 }
 

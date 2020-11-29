@@ -74,7 +74,7 @@ class QA_Module extends React.Component {
               <Row>
                 <Col>
                 {questionsLength !== 1 ?
-                  <Accordion.Toggle as={Button} variant="outline-primary" eventKey="1" onClick={() => {this.setState({open: !this.state.open})}}>
+                  <Accordion.Toggle as={Button} variant="warning" eventKey="1" onClick={() => {this.setState({open: !this.state.open})}}>
                     {this.state.open ? 'See less questions' : 'See more questions'}
                   </Accordion.Toggle> : <></> }
                 </Col>

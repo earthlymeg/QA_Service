@@ -31,7 +31,7 @@ const Helpful = (props) => {
     }
   }
   return (
-    <Button size='sm' variant='link' onClick={incrementHelpfulness}>Helpful? Yes ({helpfulness})</Button>
+    <Button size='sm' variant='link' style={{color: '#AAAAAA', marginBottom: '4px'}} onClick={incrementHelpfulness}>Helpful? Yes ({helpfulness})</Button>
   )
 }
 

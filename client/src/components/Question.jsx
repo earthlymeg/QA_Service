@@ -41,7 +41,7 @@ const Question = (props) => {
       <ul>
         {props.answers.map((answer) => {
           return (
-            <li key={answer.id}>
+            <li key={answer.id} style={{listStyle: 'none'}}>
               <Answer answer={answer} handleGetQuestionsAfterSubmit={props.handleGetQuestionsAfterSubmit} updateAnswersAfterSubmit={updateAnswersAfterSubmit} productId={props.productId} id={answer.id} />
             </li>
           )
@@ -53,7 +53,7 @@ const Question = (props) => {
   const ShowMoreAnswers = () => {
     if (sortedAnswers.length > 2) {
       return (
-        <Accordion.Toggle as={Button} variant="outline-primary" eventKey="1" onClick={() => setOpen(!open)}>
+        <Accordion.Toggle as={Button} variant="warning" eventKey="1" onClick={() => setOpen(!open)}>
           {open ? 'See less answers' : 'See more answers'}
         </Accordion.Toggle>
       )
@@ -68,7 +68,7 @@ const Question = (props) => {
         <Row>
 
           <Col>
-            <h3>Q: {props.question.question_body} </h3>
+            <h3>Q: <span style={{'textDecoration': 'underline'}}>{props.question.question_body}</span></h3>
           </Col>
 
 
